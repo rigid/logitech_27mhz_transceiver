@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 
-%include "gnuradio.i"			// the common stuff
+%include "gnuradio/swig/gnuradio.i"			// the common stuff
 
 %{
 #include "logitech_27mhz_transceiver_bin_slicer_bb.h"

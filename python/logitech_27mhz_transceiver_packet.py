@@ -18,7 +18,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-from gnuradio import gr
+from gnuradio import gr, digital, blocks
 from logitech_27mhz_transceiver import logitech_27mhz_transceiver_packet_utils as packet_utils
 import logitech_27mhz_transceiver
 import gnuradio.gr.gr_threading as _threading
@@ -188,7 +188,7 @@ class packet_decoder(gr.hier_block2):
 		self._threshold = threshold
 		#blocks
 		msgq = gr.msg_queue(DEFAULT_MSGQ_LIMIT) #holds packets from the PHY
-		correlator = gr.correlate_access_code_bb(self._access_code, self._threshold)
+		correlator = digital.correlate_access_code_bb(self._access_code, self._threshold)
 		framer_sink = logitech_27mhz_transceiver.framer_sink(msgq)
 
 		#initialize hier2
@@ -251,17 +251,17 @@ class packet_demod_base(gr.hier_block2):
 		gr.hier_block2.__init__(
 			self,
 			"ofdm_mod",
-			gr.io_signature(1, 1, packet_sink._hb.input_signature().sizeof_stream_item(0)), # Input signature
+			gr.io_signature(1, 1, packet_sink.input_signature().sizeof_stream_item(0)), # Input signature
 			gr.io_signature(1, 1, self._item_size_out) # Output signature
 		)
 		#create blocks
-		msg_source = gr.message_source(self._item_size_out, DEFAULT_MSGQ_LIMIT)
+		msg_source = blocks.message_source(self._item_size_out, DEFAULT_MSGQ_LIMIT)
 		self._msgq_out = msg_source.msgq()
 		#connect
 		self.connect(self, packet_sink)
 		self.connect(msg_source, self)
-		if packet_sink._hb.output_signature().sizeof_stream_item(0):
-			self.connect(packet_sink, gr.null_sink(packet_sink._hb.output_signature().sizeof_stream_item(0)))
+		if packet_sink.output_signature().sizeof_stream_item(0):
+			self.connect(packet_sink, gr.null_sink(packet_sink.output_signature().sizeof_stream_item(0)))
 
 		self.lasttime=[]
 		self.chars=[]

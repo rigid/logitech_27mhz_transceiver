@@ -22,7 +22,7 @@
 #ifndef INCLUDED_LOGITECH_27MHZ_TRANSCEIVER_BIN_SLICER_bb_H
 #define INCLUDED_LOGITECH_27MHZ_TRANSCEIVER_BIN_SLICER_bb_H
 
-#include <gr_block.h>
+#include <gnuradio/block.h>
 
 class logitech_27mhz_transceiver_bin_slicer_bb;
 
@@ -54,7 +54,7 @@ logitech_27mhz_transceiver_bin_slicer_bb_sptr logitech_27mhz_transceiver_make_bi
  *
  * \sa logitech_27mhz_transceiver_bin_slicer_bb for a version that subclasses gr_sync_block.
  */
-class logitech_27mhz_transceiver_bin_slicer_bb : public gr_block
+class logitech_27mhz_transceiver_bin_slicer_bb : public gr::block
 {
 private:
   // The friend declaration allows logitech_27mhz_transceiver_make_bin_slicer_bb to

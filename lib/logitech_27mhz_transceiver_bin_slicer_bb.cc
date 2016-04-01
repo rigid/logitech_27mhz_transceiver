@@ -30,7 +30,7 @@
 #endif
 
 #include <logitech_27mhz_transceiver_bin_slicer_bb.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 
 /*
  * Create a new instance of logitech_27mhz_transceiver_bin_slicer_bb and return
@@ -60,9 +60,9 @@ static const int MAX_OUT = 1;	// maximum number of output streams
  * The private constructor
  */
 logitech_27mhz_transceiver_bin_slicer_bb::logitech_27mhz_transceiver_bin_slicer_bb ()
-  : gr_block ("bin_slicer_bb",
-	      gr_make_io_signature (MIN_IN, MAX_IN, sizeof (unsigned char)),
-	      gr_make_io_signature (MIN_OUT, MAX_OUT, sizeof (unsigned char)))
+  : gr::block ("bin_slicer_bb",
+	      gr::io_signature::make (MIN_IN, MAX_IN, sizeof (unsigned char)),
+	      gr::io_signature::make (MIN_OUT, MAX_OUT, sizeof (unsigned char)))
 {
   history_size = 50;
   set_history(history_size);

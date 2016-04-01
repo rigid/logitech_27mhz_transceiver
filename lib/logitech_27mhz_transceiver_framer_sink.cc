@@ -25,7 +25,8 @@
 #endif
 
 #include <logitech_27mhz_transceiver_framer_sink.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
+#include <gnuradio/message.h>
 #include <cstdio>
 #include <stdexcept>
 #include <string.h>
@@ -57,16 +58,16 @@ logitech_27mhz_transceiver_framer_sink::enter_have_sync()
 }
 
 logitech_27mhz_transceiver_framer_sink_sptr
-logitech_27mhz_transceiver_make_framer_sink(gr_msg_queue_sptr target_queue)
+logitech_27mhz_transceiver_make_framer_sink(gr::msg_queue::sptr target_queue)
 {
   return logitech_27mhz_transceiver_framer_sink_sptr(new logitech_27mhz_transceiver_framer_sink(target_queue));
 }
 
 
-logitech_27mhz_transceiver_framer_sink::logitech_27mhz_transceiver_framer_sink(gr_msg_queue_sptr target_queue)
-  : gr_sync_block ("framer_sink_1",
-		   gr_make_io_signature (1, 1, sizeof(unsigned char)),
-		   gr_make_io_signature (0, 0, 0)),
+logitech_27mhz_transceiver_framer_sink::logitech_27mhz_transceiver_framer_sink(gr::msg_queue::sptr target_queue)
+  : gr::sync_block ("framer_sink_1",
+		   gr::io_signature::make (1, 1, sizeof(unsigned char)),
+		   gr::io_signature::make (0, 0, 0)),
     d_target_queue(target_queue)
 {
   enter_search();
@@ -131,8 +132,7 @@ logitech_27mhz_transceiver_framer_sink::work (int noutput_items,
 
 
 	    // build a message with 
-	    gr_message_sptr msg =
-	      gr_make_message(0, 0, 0, d_packetlen_cnt);
+	    gr::message::sptr msg = gr::message::make(0, 0, 0, d_packetlen_cnt);
 	    memcpy(msg->msg(), d_packet, d_packetlen_cnt);
 
 	    d_target_queue->insert_tail(msg);		// send it

@@ -23,14 +23,14 @@
 #ifndef INCLUDED_logitech_27mhz_transceiver_framer_sink_H
 #define INCLUDED_logitech_27mhz_transceiver_framer_sink_H
 
-#include <gr_sync_block.h>
-#include <gr_msg_queue.h>
+#include <gnuradio/sync_block.h>
+#include <gnuradio/msg_queue.h>
 
 class logitech_27mhz_transceiver_framer_sink;
 typedef boost::shared_ptr<logitech_27mhz_transceiver_framer_sink> logitech_27mhz_transceiver_framer_sink_sptr;
 
 logitech_27mhz_transceiver_framer_sink_sptr 
-logitech_27mhz_transceiver_make_framer_sink (gr_msg_queue_sptr target_queue);
+logitech_27mhz_transceiver_make_framer_sink (gr::msg_queue::sptr target_queue);
 
 /*!
  * \brief Given a stream of bits and access_code flags, assemble packets.
@@ -50,17 +50,17 @@ logitech_27mhz_transceiver_make_framer_sink (gr_msg_queue_sptr target_queue);
  * the first bit of the packet.  That is, this bit is the first
  * one after the access code.
  */
-class logitech_27mhz_transceiver_framer_sink : public gr_sync_block
+class logitech_27mhz_transceiver_framer_sink : public gr::sync_block
 {
   friend logitech_27mhz_transceiver_framer_sink_sptr 
-  logitech_27mhz_transceiver_make_framer_sink (gr_msg_queue_sptr target_queue);
+  logitech_27mhz_transceiver_make_framer_sink (gr::msg_queue::sptr target_queue);
 
  private:
   enum state_t {STATE_SYNC_SEARCH, STATE_HAVE_SYNC};
 
   static const int MAX_PKT_LEN    = 200;	// has to be >2
 
-  gr_msg_queue_sptr  d_target_queue;		// where to send the packet when received
+  gr::msg_queue::sptr  d_target_queue;		// where to send the packet when received
   state_t            d_state;
   unsigned int       d_header;			// header bits
   int		     d_headerbitlen_cnt;	// how many so far
@@ -73,7 +73,7 @@ class logitech_27mhz_transceiver_framer_sink : public gr_sync_block
   int		     d_held_one;		// counter how many times 1 was held
 
  protected:
-  logitech_27mhz_transceiver_framer_sink(gr_msg_queue_sptr target_queue);
+  logitech_27mhz_transceiver_framer_sink(gr::msg_queue::sptr target_queue);
 
   void enter_search();
   void enter_have_sync();

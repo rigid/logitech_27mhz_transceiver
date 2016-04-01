@@ -22,7 +22,7 @@
 #ifndef INCLUDED_logitech_27mhz_transceiver_key_src_b_H
 #define INCLUDED_logitech_27mhz_transceiver_key_src_b_H
 
-#include <gr_sync_block.h>
+#include <gnuradio/sync_block.h>
 
 class logitech_27mhz_transceiver_key_src_b;
 
@@ -54,7 +54,7 @@ logitech_27mhz_transceiver_key_src_b_sptr logitech_27mhz_transceiver_make_key_sr
  *
  * This uses the preferred technique: subclassing gr_sync_block.
  */
-class logitech_27mhz_transceiver_key_src_b : public gr_sync_block
+class logitech_27mhz_transceiver_key_src_b : public gr::sync_block
 {
 private:
   // The friend declaration allows logitech_27mhz_transceiver_make_key_src_b to

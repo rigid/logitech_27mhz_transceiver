@@ -30,7 +30,7 @@
 #endif
 
 #include <logitech_27mhz_transceiver_key_src_b.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 
 
 
@@ -62,9 +62,9 @@ static const int MAX_OUT = 1;	// maximum number of output streams
  * The private constructor
  */
 logitech_27mhz_transceiver_key_src_b::logitech_27mhz_transceiver_key_src_b ()
-  : gr_sync_block ("square2_ff",
-		   gr_make_io_signature (0, 0, 0),
-		   gr_make_io_signature (MIN_OUT, MAX_OUT, sizeof (char)))
+  : sync_block ("square2_ff",
+		   gr::io_signature::make (0, 0, 0),
+		   gr::io_signature::make (MIN_OUT, MAX_OUT, sizeof (char)))
 {
   // nothing else required
 }
